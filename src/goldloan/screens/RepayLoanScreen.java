@@ -1,30 +1,29 @@
 package src.goldloan.screens;
 
-import javafx.scene.Scene;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+import javafx.scene.layout.VBox;
 import src.goldloan.LoanManager;
 import src.goldloan.Loan;
+import src.goldloan.Repayment;
+
+import java.time.LocalDate;
 
 public class RepayLoanScreen {
 
-    public static void display(LoanManager manager) {
-        Stage window = new Stage();
-        window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Repay Loan");
-
+    public static VBox getScreen(LoanManager manager) {
         GridPane grid = new GridPane();
-        grid.setVgap(10);
+        grid.setPadding(new Insets(20));
         grid.setHgap(10);
+        grid.setVgap(10);
 
         TextField loanIdInput = new TextField();
         TextField amountInput = new TextField();
-        Button submit = new Button("Repay");
+        Button submit = new Button("Repay Loan");
 
         grid.add(new Label("Loan ID:"), 0, 0); grid.add(loanIdInput, 1, 0);
-        grid.add(new Label("Repayment Amount:"), 0, 1); grid.add(amountInput, 1, 1);
+        grid.add(new Label("Amount:"), 0, 1); grid.add(amountInput, 1, 1);
         grid.add(submit, 1, 2);
 
         submit.setOnAction(e -> {
@@ -34,14 +33,16 @@ public class RepayLoanScreen {
                 alert.showAndWait();
                 return;
             }
-            manager.addRepayment(loanIdInput.getText(), Double.parseDouble(amountInput.getText()));
+            double amt = Double.parseDouble(amountInput.getText());
+            loan.addRepayment(new Repayment(amt, LocalDate.now()));
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Repayment successful!");
             alert.showAndWait();
-            window.close();
+            loanIdInput.clear(); amountInput.clear();
         });
 
-        Scene scene = new Scene(grid, 350, 200);
-        window.setScene(scene);
-        window.showAndWait();
+        VBox layout = new VBox(grid);
+        layout.setSpacing(10);
+        layout.setPadding(new Insets(10));
+        return layout;
     }
 }

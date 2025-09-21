@@ -1,0 +1,22 @@
+.root {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 14px;
+    -fx-background-color: #f5f5f5;
+}
+
+.button {
+    -fx-background-color: #2c7be5;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8 16 8 16;
+    -fx-background-radius: 5;
+}
+
+.button:hover {
+    -fx-background-color: #1a5bb8;
+}
+
+.text-area {
+    -fx-font-family: "Consolas";
+    -fx-font-size: 13px;
+}

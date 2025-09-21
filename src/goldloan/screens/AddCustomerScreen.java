@@ -1,22 +1,18 @@
 package src.goldloan.screens;
 
-import javafx.scene.Scene;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+import javafx.scene.layout.VBox;
 import src.goldloan.*;
 
 public class AddCustomerScreen {
 
-    public static void display(LoanManager manager) {
-        Stage window = new Stage();
-        window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Add Customer");
-
+    public static VBox getScreen(LoanManager manager) {
         GridPane grid = new GridPane();
-        grid.setVgap(10);
+        grid.setPadding(new Insets(20));
         grid.setHgap(10);
+        grid.setVgap(10);
 
         TextField idInput = new TextField();
         TextField nameInput = new TextField();
@@ -31,17 +27,26 @@ public class AddCustomerScreen {
         grid.add(submit, 1, 4);
 
         submit.setOnAction(e -> {
+            if (idInput.getText().isEmpty() || nameInput.getText().isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "ID and Name are required!");
+                alert.showAndWait();
+                return;
+            }
             manager.addCustomer(new Customer(
                     idInput.getText(),
                     nameInput.getText(),
                     aadhaarInput.getText(),
                     phoneInput.getText()
             ));
-            window.close();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Customer added successfully!");
+            alert.showAndWait();
+            idInput.clear(); nameInput.clear(); aadhaarInput.clear(); phoneInput.clear();
         });
 
-        Scene scene = new Scene(grid, 350, 250);
-        window.setScene(scene);
-        window.showAndWait();
+        VBox layout = new VBox(grid);
+        layout.setPadding(new Insets(10));
+        layout.setSpacing(10);
+
+        return layout;
     }
 }

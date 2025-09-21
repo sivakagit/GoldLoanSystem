@@ -1,22 +1,18 @@
 package src.goldloan.screens;
 
-import javafx.scene.Scene;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+import javafx.scene.layout.VBox;
 import src.goldloan.*;
 
 public class IssueLoanScreen {
 
-    public static void display(LoanManager manager) {
-        Stage window = new Stage();
-        window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Issue Loan");
-
+    public static VBox getScreen(LoanManager manager) {
         GridPane grid = new GridPane();
-        grid.setVgap(10);
+        grid.setPadding(new Insets(20));
         grid.setHgap(10);
+        grid.setVgap(10);
 
         TextField loanIdInput = new TextField();
         TextField custIdInput = new TextField();
@@ -25,6 +21,7 @@ public class IssueLoanScreen {
         TextField rateInput = new TextField();
         TextField principalInput = new TextField();
         TextField interestInput = new TextField();
+
         Button submit = new Button("Issue Loan");
 
         grid.add(new Label("Loan ID:"), 0, 0); grid.add(loanIdInput, 1, 0);
@@ -33,7 +30,7 @@ public class IssueLoanScreen {
         grid.add(new Label("Purity (%):"), 0, 3); grid.add(purityInput, 1, 3);
         grid.add(new Label("Market Rate:"), 0, 4); grid.add(rateInput, 1, 4);
         grid.add(new Label("Principal Amount:"), 0, 5); grid.add(principalInput, 1, 5);
-        grid.add(new Label("Interest Rate (% p.a.):"), 0, 6); grid.add(interestInput, 1, 6);
+        grid.add(new Label("Interest Rate (%):"), 0, 6); grid.add(interestInput, 1, 6);
         grid.add(submit, 1, 7);
 
         submit.setOnAction(e -> {
@@ -58,11 +55,14 @@ public class IssueLoanScreen {
             manager.issueLoan(loan);
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Loan issued successfully!");
             alert.showAndWait();
-            window.close();
+            loanIdInput.clear(); custIdInput.clear(); weightInput.clear(); purityInput.clear();
+            rateInput.clear(); principalInput.clear(); interestInput.clear();
         });
 
-        Scene scene = new Scene(grid, 400, 400);
-        window.setScene(scene);
-        window.showAndWait();
+        VBox layout = new VBox(grid);
+        layout.setPadding(new Insets(10));
+        layout.setSpacing(10);
+
+        return layout;
     }
 }
