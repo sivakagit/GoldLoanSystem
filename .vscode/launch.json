@@ -1,0 +1,28 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Main (JavaFX)",
+            "request": "launch",
+            "mainClass": "src.goldloan.Main",
+            "projectName": "Gold Loan Management System_93560abe",
+            "vmArgs": "--module-path \"C:\\Java\\javafx-sdk-25\\lib\" --add-modules javafx.controls,javafx.fxml"
+        },
+        {
+            "type": "java",
+            "name": "MainApp (JavaFX)",
+            "request": "launch",
+            "mainClass": "src.goldloan.MainApp",
+            "projectName": "Gold Loan Management System_93560abe",
+            "vmArgs": "--module-path \"C:\\Java\\javafx-sdk-25\\lib\" --add-modules javafx.controls,javafx.fxml"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        }
+    ]
+}
+
